@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
+* **Tech Lead Agent:** New `/apm-tech-lead` command that runs automatically after the Planner finishes (same assistant, new terminal). It reads `.apm/spec.md`, `.apm/plan.md`, and `{RULES_FILE}`, performs an architectural risk/edge-case review and token/resource forecast, and appends operational guardrails and fallbacks into the `APM_RULES` block without overwriting existing Rules.
 * **DeepSeek Harness Support:** Full support for the DeepSeek Harness platform, including `.dsh/` directory structure (`.dsh/skills/`, `.dsh/apm-guides/`, `.dsh/agents/`). APM commands are installed as user-invocable skills and invoked with a `/` prefix (e.g., `/apm-1-initiate-planner`), with subagent guidance using the native `subagent` tool.
 * **Antigravity Support:** Full support for the new Antigravity (CLI and IDE), including optimized directory structure (`.agents/workflows/`, `.agents/skills/`) and agent-first subagent guidance.
 

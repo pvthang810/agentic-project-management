@@ -121,7 +121,9 @@ website/static/docs-gif/*.gif
 api-docs/
 
 # Assistant Files
+.apm/
 .claude/
+.dsh/
 AGENTS.md
 CLAUDE.md
 
