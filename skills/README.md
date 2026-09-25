@@ -26,6 +26,7 @@ The skill file is the same across all platforms - only the destination directory
 | Antigravity | `.agents/skills/apm-assist/` |
 | OpenCode | `.opencode/skills/apm-assist/` |
 | Codex CLI | `.agents/skills/apm-assist/` |
+| DeepSeek Harness | `.dsh/skills/apm-assist/` |
 
 ### apm-customization
 

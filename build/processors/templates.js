@@ -91,10 +91,12 @@ async function processTemplate(templatePath, options) {
         const description = frontmatter.description || 'APM command';
         finalContent = `description = "${description}"\n\nprompt = """\n${processedBody}\n"""\n`;
         outputPath = path.join(commandsDir, `${basename}${ext}`);
-      } else if (target.id === 'codex') {
-        // Codex: commands become skills in directory structure (skills/<name>/SKILL.md)
-        const codexFrontmatter = `---\nname: ${basename}\ndescription: ${frontmatter.description || 'APM command'}\nuser-invocable: true\n---\n`;
-        finalContent = codexFrontmatter + processedBody;
+      } else if (target.id === 'codex' || target.id === 'dsh') {
+        // Codex and DeepSeek Harness: commands become user-invocable skills in
+        // directory structure (skills/<name>/SKILL.md) — Codex uses $ invocation,
+        // DeepSeek Harness uses / invocation of the skill name.
+        const skillFrontmatter = `---\nname: ${basename}\ndescription: ${frontmatter.description || 'APM command'}\nuser-invocable: true\n---\n`;
+        finalContent = skillFrontmatter + processedBody;
         const skillDir = path.join(commandsDir, basename);
         await fs.ensureDir(skillDir);
         outputPath = path.join(skillDir, 'SKILL.md');

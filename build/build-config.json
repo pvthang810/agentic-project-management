@@ -136,6 +136,28 @@
         "configNote": null
       },
       "postInstallNote": "Codex CLI does not support custom slash commands. APM commands are installed as skills and invoked with the $ prefix (e.g., $apm-1-initiate-planner) instead of /slash-commands."
+    },
+    {
+      "id": "dsh",
+      "name": "DeepSeek Harness",
+      "bundleName": "dsh.zip",
+      "format": "markdown",
+      "configDir": ".dsh",
+      "directories": {
+        "commands": ".dsh/skills",
+        "skills": ".dsh/skills",
+        "guides": ".dsh/apm-guides",
+        "agents": ".dsh/agents"
+      },
+      "contextAttachSyntax": "Reference the file using `@` followed by the file path.",
+      "newChatGuidance": "Open the DeepSeek Harness web GUI and start a new chat",
+      "subagentGuidance": {
+        "hasSubagents": true,
+        "toolSyntax": "subagent(prompt=\"...\", description=\"...\")",
+        "explorerName": "exploration",
+        "configNote": null
+      },
+      "postInstallNote": "DeepSeek Harness does not support platform slash commands. APM commands are installed as user-invocable skills and invoked with a / prefix (e.g., /apm-1-initiate-planner) - type / in chat to see the available APM commands."
     }
   ]
 }

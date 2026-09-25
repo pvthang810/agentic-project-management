@@ -69,10 +69,11 @@ export function replacePlaceholders(content, context) {
 
   // Replace COMMAND_PATH placeholder (resolves to full path with target-specific extension)
   // Codex: commands are skills in directory structure (skills/<name>/SKILL.md)
+  // DeepSeek Harness: commands are user-invocable skills (skills/<name>/SKILL.md)
   const commandExt = getOutputExtension(target);
   replaced = replaced.replace(/{COMMAND_PATH:([^}]+)}/g, (_match, commandName) => {
     const base = path.basename(commandName, path.extname(commandName));
-    if (id === 'codex') {
+    if (id === 'codex' || id === 'dsh') {
       return path.join(directories.commands, base, 'SKILL.md');
     }
     return path.join(directories.commands, `${base}${commandExt}`);
@@ -80,11 +81,12 @@ export function replacePlaceholders(content, context) {
 
   // Replace ARGS placeholder based on format
   // Platforms with native argument variables: Claude ($ARGUMENTS), Copilot (${input:args}),
-  // OpenCode ($ARGUMENTS); the TOML output format uses {{args}}. Cursor and Codex have no
-  // argument variable, so descriptive text is used so the model picks up the user's input naturally.
+  // OpenCode ($ARGUMENTS); the TOML output format uses {{args}}. Cursor, Codex, and
+  // DeepSeek Harness have no argument variable, so descriptive text is used so the model
+  // picks up the user's input naturally.
   const argsPlaceholder = format === 'toml' ? '{{args}}'
     : id === 'copilot' ? '${input:args}'
-    : (id === 'codex' || id === 'cursor') ? '(the text provided by the User after the command invocation, if any)'
+    : (id === 'codex' || id === 'cursor' || id === 'dsh') ? '(the text provided by the User after the command invocation, if any)'
     : '$ARGUMENTS';
   replaced = replaced.replace(/{ARGS}/g, argsPlaceholder);
 
@@ -122,7 +124,13 @@ export function replacePlaceholders(content, context) {
 
   // Replace ARCHIVE_EXPLORER_GUIDANCE placeholder
   const archiveExplorerPath = path.join(directories.agents, `apm-archive-explorer${agentExt}`);
-  const archiveExplorerText = `spawn a subagent with the \`${archiveExplorerPath}\` agent configuration and pass it the archive path(s) to explore`;
+  let archiveExplorerText;
+  if (id === 'dsh') {
+    // DeepSeek Harness spawns subagents with a plain prompt, not a named agent config.
+    archiveExplorerText = `read the \`${archiveExplorerPath}\` archive explorer agent prompt, then spawn a dedicated subagent with the \`subagent\` tool using that prompt plus the archive path(s) to explore`;
+  } else {
+    archiveExplorerText = `spawn a subagent with the \`${archiveExplorerPath}\` agent configuration and pass it the archive path(s) to explore`;
+  }
   replaced = replaced.replace(/{ARCHIVE_EXPLORER_GUIDANCE}/g, archiveExplorerText);
 
   // Replace CONTEXT_ATTACH_SYNTAX placeholder

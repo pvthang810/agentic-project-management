@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
+* **DeepSeek Harness Support:** Full support for the DeepSeek Harness platform, including `.dsh/` directory structure (`.dsh/skills/`, `.dsh/apm-guides/`, `.dsh/agents/`). APM commands are installed as user-invocable skills and invoked with a `/` prefix (e.g., `/apm-1-initiate-planner`), with subagent guidance using the native `subagent` tool.
 * **Antigravity Support:** Full support for the new Antigravity (CLI and IDE), including optimized directory structure (`.agents/workflows/`, `.agents/skills/`) and agent-first subagent guidance.
 
 ## [1.0.1] - 2026-04-24
